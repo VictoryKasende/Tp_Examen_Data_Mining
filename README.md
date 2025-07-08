@@ -36,4 +36,4 @@ pip install -r requirements.txt
 Dans le notebook, une cellule permet de charger le pipeline sauvegardé et de prédire le résultat pour un nouveau candidat ou un fichier CSV externe.
 
 ## Auteurs
-Projet réalisé par [Votre Nom].
+Projet réalisé par mon github [Victoire Kasende](https://github.com/VictoryKasende/).
