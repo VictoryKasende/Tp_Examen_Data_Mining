@@ -1,0 +1,31 @@
+# Fichiers/dossiers à ignorer par git
+
+# Données générées
+/data/
+
+# Modèles sauvegardés
+/scripts/model/
+
+# Notebooks checkpoints
+**/.ipynb_checkpoints/
+
+# Fichiers temporaires Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnements virtuels
+.venv/
+venv/
+ENV/
+.conda/
+.github/
+.vscode/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
