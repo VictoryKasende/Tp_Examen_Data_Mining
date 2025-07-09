@@ -14,6 +14,7 @@ Fonctionnalités :
 
 from fastapi import FastAPI, Body
 from pydantic import BaseModel, Field, constr
+from fastapi.responses import HTMLResponse
 import joblib
 import pandas as pd
 from typing import List, Optional
@@ -109,43 +110,34 @@ async def predict_batch(
     probas = pipeline.predict_proba(data)[:, 1]
     return [PredictionResponse(prediction=int(pred), probabilite_retenu=round(float(proba), 4)) for pred, proba in zip(predictions, probas)]
 
-@app.get("/", tags=["Accueil"], summary="Accueil de l'API")
+@app.get("/", tags=["Accueil"], summary="Accueil de l'API", response_class=HTMLResponse)
 def root():
-    """Message d'accueil de l'API."""
-    return {"message": "Bienvenue sur l'API professionnelle de prédiction d'entretien d'embauche !"}
+    """Page d'accueil HTML simple pour l'API."""
+    return """
+    <html>
+        <head>
+            <title>API Prédiction Entretien d'Embauche</title>
+            <style>
+                body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+                .container { max-width: 600px; margin: 60px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ddd; padding: 32px; }
+                h1 { color: #2b4c7e; }
+                p { font-size: 1.1em; }
+                a { color: #2b4c7e; text-decoration: none; }
+                a:hover { text-decoration: underline; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>API Prédiction Entretien d'Embauche</h1>
+                <p>Bienvenue sur l'API professionnelle de prédiction d'entretien d'embauche !</p>
+                <p>Consultez la <a href='/docs'>documentation interactive Swagger</a> pour tester l'API.</p>
+                <ul>
+                    <li><b>POST</b> <code>/predict</code> : Prédiction pour un candidat</li>
+                    <li><b>POST</b> <code>/predict_batch</code> : Prédiction pour plusieurs candidats</li>
+                </ul>
+                <p style="color: #888; font-size: 0.95em;">Projet Data Science &copy; 2025</p>
+            </div>
+        </body>
+    </html>
+    """
 
-class Candidat(BaseModel):
-    age: int
-    diplome: str
-    note_anglais: float
-    experience: int
-    entreprises_precedentes: Optional[int] = 0
-    distance_km: Optional[float] = 0.0
-    score_entretien: Optional[float] = 0.0
-    score_competence: Optional[float] = 0.0
-    score_personnalite: Optional[float] = 0.0
-    sexe: str
-
-@app.post("/predict", summary="Prédire le succès d'un entretien", tags=["Prédiction"])
-def predict_candidat(candidat: Candidat):
-    data = pd.DataFrame([candidat.dict()])
-    prediction = pipeline.predict(data)[0]
-    proba = pipeline.predict_proba(data)[0][1]
-    return {
-        "prediction": int(prediction),
-        "probabilite_retenu": round(float(proba), 4)
-    }
-
-@app.post("/predict_batch", summary="Prédire pour plusieurs candidats", tags=["Prédiction"])
-def predict_batch(candidats: List[Candidat]):
-    data = pd.DataFrame([c.dict() for c in candidats])
-    predictions = pipeline.predict(data)
-    probas = pipeline.predict_proba(data)[:, 1]
-    return [
-        {"prediction": int(pred), "probabilite_retenu": round(float(proba), 4)}
-        for pred, proba in zip(predictions, probas)
-    ]
-
-@app.get("/", tags=["Accueil"])
-def root():
-    return {"message": "Bienvenue sur l'API de prédiction d'entretien d'embauche !"}
