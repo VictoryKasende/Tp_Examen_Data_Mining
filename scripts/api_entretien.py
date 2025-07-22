@@ -167,8 +167,8 @@ def root():
         </head>
         <body>
             <div class="container">
-                <h1>🤖 API Prédiction Entretien d'Embauche</h1>
-                <div class="status">✅ API en ligne et prête à recevoir les requêtes du frontend React !</div>
+                <h1>API Prédiction Entretien d'Embauche</h1>
+                <div class="status">API en ligne et prête à recevoir les requêtes du frontend React !</div>
                 <p>Bienvenue sur l'API professionnelle de prédiction d'entretien d'embauche !</p>
                 <p>Consultez la <a href='/docs' target='_blank'>documentation interactive Swagger</a> pour tester l'API.</p>
                 <ul>
@@ -177,8 +177,8 @@ def root():
                 </ul>
                 <p><b>CORS configuré pour :</b></p>
                 <ul>
-                    <li>🌐 <code>http://localhost:3000</code> (Frontend React)</li>
-                    <li>🌐 <code>http://127.0.0.1:3000</code> (Alternative)</li>
+                    <li><code>http://localhost:3000</code> (Frontend React)</li>
+                    <li><code>http://127.0.0.1:3000</code> (Alternative)</li>
                 </ul>
                 <p style="color: #888; font-size: 0.95em;">Projet Data Science &copy; 2025 - HirePredict AI</p>
             </div>
